@@ -19,6 +19,8 @@ class Videojuego(models.Model):
     fecha_publicacion = models.DateField()
     ISBN = models.CharField(max_length=13, unique=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to='videojuegos/', null=True, blank=True)  # Nuevo campo
+    sinopsis = models.TextField(null=True, blank=True)  # Nuevo campo
 
     def __str__(self):
         return f"{self.titulo} - {self.autor}"
@@ -26,3 +28,12 @@ class Videojuego(models.Model):
     class Meta:
         verbose_name = "Videojuego"
         verbose_name_plural = "Videojuegos"
+
+class Comentario(models.Model):
+    videojuego = models.ForeignKey(Videojuego, on_delete=models.CASCADE, related_name='comentarios')
+    nombre = models.CharField(max_length=100)
+    texto = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.nombre} - {self.videojuego.titulo}"
