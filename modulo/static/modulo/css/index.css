@@ -241,6 +241,12 @@ select {
     box-shadow: 0 1px 4px rgba(44,62,80,0.05);
 }
 
+/* Sinopsis */
+.sinopsis {
+    text-align: justify;
+    line-height: 1.6; /* Opcional: mejora la legibilidad */
+}
+
 /* Footer */
 footer {
     background: #2c3e50;
