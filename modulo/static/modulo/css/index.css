@@ -1,0 +1,164 @@
+/* Reset y variables */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --background-color: #f5f5f5;
+    --card-bg: #ffffff;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navegación */
+nav {
+    background: #2c3e50;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.nav-links a:hover {
+    background: #3498db;
+}
+
+/* Contenido principal */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Filtro */
+.filtro-seccion {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+select {
+    padding: 0.7rem;
+    border-radius: 6px;
+    border: 2px solid #2c3e50;
+    font-size: 1rem;
+}
+
+/* Grid de libros */
+.libros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.libro-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    border: 1.5px solid #e0e0e0;
+}
+
+.libro-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(44,62,80,0.18);
+    border: 1.5px solid #3498db;
+}
+
+.libro-card h3 {
+    margin: 0 0 0.7rem 0;
+    color: #2c3e50;
+}
+
+.autor {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.categoria {
+    color: #3498db;
+    background: #eaf6fb;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.fecha {
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+}
+
+.no-libros {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Grid de videojuegos */
+.videojuegos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.videojuego-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    border: 1.5px solid #e0e0e0;
+}
+
+.videojuego-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(44,62,80,0.18);
+    border: 1.5px solid #3498db;
+}
+
+.no-videojuegos {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+}
+
+/* Footer */
+footer {
+    background: #2c3e50;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 3rem;
+}

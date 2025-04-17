@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca - MPA Django</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'modulo/css/index.css' %}">
+</head>
+<body>
+    <!-- Encabezado y navegación -->
+    <header>
+        <nav>
+            <div class="brand">MPA Django</div>
+            <div class="nav-links">
+                <a href="{% url 'index' %}">Inicio</a>
+                <a href="{% url 'admin:index' %}">Administración</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        <h1>Catálogo de Videojuegos</h1>
+        
+        <!-- Filtro por categoría -->
+        <div class="filtro-seccion">
+            <form method="get" action="{% url 'index' %}">
+                <select name="categoria" onchange="this.form.submit()">
+                    <option value="">Todas las categorías</option>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if categoria.id|stringformat:"s" == categoria_seleccionada %}selected{% endif %}>
+                        {{ categoria.nombre }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <!-- Lista de videojuegos -->
+        <div class="videojuegos-grid">
+            {% for videojuego in videojuegos %}
+            <div class="videojuego-card">
+                <h3>{{ videojuego.titulo }}</h3>
+                <p class="autor">por {{ videojuego.autor }}</p>
+                <p class="categoria">{{ videojuego.categoria.nombre }}</p>
+                <p class="fecha">{{ videojuego.fecha_publicacion|date:"d/m/Y" }}</p>
+            </div>
+            {% empty %}
+            <p class="no-videojuegos">No hay videojuegos disponibles en esta categoría.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 Proyecto Académico Django. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
