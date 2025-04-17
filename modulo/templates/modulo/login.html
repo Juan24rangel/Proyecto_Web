@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" href="{% static 'modulo/css/index.css' %}">
+</head>
+<body>
+    <main>
+        <div class="login-container">
+            <h1>Iniciar sesión</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+            {% if form.errors %}
+                <p style="color: red;">Usuario o contraseña incorrectos.</p>
+            {% endif %}
+        </div>
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                Cerrar sesión
+            </button>
+        </form>
+    </main>
+</body>
+</html>
