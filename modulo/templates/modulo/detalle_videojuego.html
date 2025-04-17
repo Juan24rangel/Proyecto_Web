@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ videojuego.titulo }}</title>
+    <link rel="stylesheet" href="{% static 'modulo/css/index.css' %}">
+</head>
+<body>
+    <main>
+        <div class="detalle-videojuego">
+            {% if videojuego.imagen %}
+                <img src="{{ videojuego.imagen.url }}" alt="{{ videojuego.titulo }}" class="imagen-videojuego">
+            {% endif %}
+            <h1>{{ videojuego.titulo }}</h1>
+            <p><strong>Creador:</strong> {{ videojuego.autor }}</p>
+            <p><strong>Categoría:</strong> {{ videojuego.categoria.nombre }}</p>
+            <p><strong>Fecha de publicación:</strong> {{ videojuego.fecha_publicacion|date:"d/m/Y" }}</p>
+            <p><strong>Sinopsis:</strong> {{ videojuego.sinopsis }}</p>
+        </div>
+        <hr>
+        <div class="comentarios">
+            <h2>Comentarios</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="nombre" placeholder="Tu nombre" required><br>
+                <textarea name="texto" placeholder="Escribe tu comentario" required></textarea><br>
+                <button type="submit">Comentar</button>
+            </form>
+            <ul>
+                {% for comentario in comentarios %}
+                <li>
+                    <strong>{{ comentario.nombre }}</strong> ({{ comentario.fecha|date:"d/m/Y H:i" }}):<br>
+                    {{ comentario.texto }}
+                </li>
+                {% empty %}
+                <li>No hay comentarios aún.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+</body>
+</html>
