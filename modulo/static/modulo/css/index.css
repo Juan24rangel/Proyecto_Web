@@ -304,3 +304,31 @@ footer {
 .login-container button:hover {
     background: #2c3e50;
 }
+
+/* Rating */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.rating input:checked ~ label {
+    color: #f5c518;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #f5c518;
+}

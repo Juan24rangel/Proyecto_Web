@@ -31,9 +31,9 @@ class Videojuego(models.Model):
 
 class Comentario(models.Model):
     videojuego = models.ForeignKey(Videojuego, on_delete=models.CASCADE, related_name='comentarios')
-    nombre = models.CharField(max_length=100)
     texto = models.TextField()
+    rating = models.IntegerField(default=0)  # Nuevo campo para la puntuación
     fecha = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.nombre} - {self.videojuego.titulo}"
+        return f"{self.videojuego.titulo} - {self.rating} estrellas"

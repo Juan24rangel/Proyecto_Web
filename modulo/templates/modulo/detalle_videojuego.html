@@ -24,7 +24,18 @@
             {% if user.is_authenticated %}
                 <form method="post">
                     {% csrf_token %}
-                    <input type="text" name="nombre" placeholder="Tu nombre" required><br>
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5" required>
+                        <label for="star5" title="5 estrellas">★</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="4 estrellas">★</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="3 estrellas">★</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="2 estrellas">★</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="1 estrella">★</label>
+                    </div>
                     <textarea name="texto" placeholder="Escribe tu comentario" required></textarea><br>
                     <button type="submit">Comentar</button>
                 </form>
@@ -34,7 +45,7 @@
             <ul>
                 {% for comentario in comentarios %}
                 <li>
-                    <strong>{{ comentario.nombre }}</strong> ({{ comentario.fecha|date:"d/m/Y H:i" }}):<br>
+                    <strong>Puntuación: {{ comentario.rating }} estrellas</strong><br>
                     {{ comentario.texto }}
                 </li>
                 {% empty %}
@@ -45,3 +56,17 @@
     </main>
 </body>
 </html>
+
+def detalle_videojuego(request, videojuego_id):
+    videojuego = get_object_or_404(Videojuego, id=videojuego_id)
+    comentarios = videojuego.comentarios.order_by('-fecha')
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        texto = request.POST.get('texto')
+        if rating and texto:
+            Comentario.objects.create(videojuego=videojuego, rating=rating, texto=texto)
+            return redirect('detalle_videojuego', videojuego_id=videojuego.id)
+    return render(request, 'modulo/detalle_videojuego.html', {
+        'videojuego': videojuego,
+        'comentarios': comentarios
+    })
