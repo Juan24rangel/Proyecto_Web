@@ -12,7 +12,4 @@ urlpatterns = [
     path('videojuego/<int:videojuego_id>/', views.detalle_videojuego, name='detalle_videojuego'),
     path('favorito/agregar/<int:videojuego_id>/', views.agregar_favorito, name='agregar_favorito'),
     path('favorito/eliminar/<int:videojuego_id>/', views.eliminar_favorito, name='eliminar_favorito'),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

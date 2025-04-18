@@ -46,3 +46,10 @@ class Favorito(models.Model):
 
     def __str__(self):
         return f"{self.usuario.username} - {self.videojuego.titulo}"
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    foto_perfil = models.ImageField(upload_to='fotos_perfil/', default='fotos_perfil/default.jpg')
+
+    def __str__(self):
+        return f"Perfil de {self.usuario.username}"

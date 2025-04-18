@@ -31,6 +31,14 @@
         </nav>
     </header>
 
+    <!-- Barra de búsqueda -->
+    <div class="buscador">
+        <form method="get" action="{% url 'index' %}">
+            <input type="text" name="q" placeholder="Buscar videojuegos..." value="{{ request.GET.q }}">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
     <main>
         <h1 style="font-size: 5em; font-family: 'MV Boli', sans-serif; color: rgb(255, 255, 255); -webkit-text-stroke:0.1px black; ">GAME BLOG</h1>
         <div class="filtro-seccion">
@@ -65,6 +73,17 @@
             <p class="no-videojuegos">No hay videojuegos disponibles en esta categoría.</p>
             {% endfor %}
         </div>
+        
+        <div class="buscador">
+            <form method="get" action="{% url 'index' %}">
+                <input type="text" name="q" placeholder="Buscar videojuegos..." value="{{ request.GET.q }}">
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+
+        {% if mensaje %}
+            <p class="mensaje">{{ mensaje }}</p>
+        {% endif %}
     </main>
 </body>
 </html>

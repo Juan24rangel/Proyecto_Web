@@ -14,28 +14,42 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
             <p><strong>Último inicio de sesión:</strong> {{ user.last_login|date:"d/m/Y H:i" }}</p>
-        </div>
-        <div class="perfil-favoritos">
-            <h2>Juegos favoritos</h2>
-            <div class="videojuegos-grid">
-                {% for favorito in user.favoritos.all %}
-                <a href="{% url 'detalle_videojuego' favorito.videojuego.id %}" class="videojuego-link">
-                    <div class="videojuego-card">
-                        {% if favorito.videojuego.imagen %}
-                            <img src="{{ favorito.videojuego.imagen.url }}" alt="{{ favorito.videojuego.titulo }}" class="imagen-videojuego">
-                        {% else %}
-                            <img src="{% static 'modulo/img/default.jpg' %}" alt="Sin imagen" class="imagen-videojuego">
-                        {% endif %}
-                        <h3>{{ favorito.videojuego.titulo }}</h3>
-                        <p class="autor">por {{ favorito.videojuego.autor }}</p>
-                        <p class="categoria">{{ favorito.videojuego.categoria.nombre }}</p>
-                        <p class="fecha">{{ favorito.videojuego.fecha_publicacion|date:"d/m/Y" }}</p>
-                    </div>
-                </a>
-                {% empty %}
-                <p class="no-videojuegos">No tienes juegos favoritos aún.</p>
-                {% endfor %}
+
+            <!-- Mostrar la foto de perfil -->
+            <div class="foto-perfil">
+                <img src="{{ perfil.foto_perfil.url }}" alt="Foto de perfil" class="imagen-perfil">
             </div>
+
+            <!-- Formulario para subir una nueva foto -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="id_foto_perfil">Subir nueva foto de perfil:</label>
+                <input type="file" name="foto_perfil" id="id_foto_perfil">
+                <button type="submit">Actualizar foto de perfil</button>
+            </form>
+        </div>
+
+        <!-- Título para los favoritos -->
+        <h2 style="text-align: center; margin-top: 2rem; color: white; -webkit-text-stroke: 0.1px black;">Favoritos:</h2>
+
+        <div class="videojuegos-grid">
+            {% for favorito in user.favoritos.all %}
+            <a href="{% url 'detalle_videojuego' favorito.videojuego.id %}" class="videojuego-link">
+                <div class="videojuego-card">
+                    {% if favorito.videojuego.imagen %}
+                        <img src="{{ favorito.videojuego.imagen.url }}" alt="{{ favorito.videojuego.titulo }}" class="imagen-videojuego">
+                    {% else %}
+                        <img src="{% static 'modulo/img/default.jpg' %}" alt="Sin imagen" class="imagen-videojuego">
+                    {% endif %}
+                    <h3>{{ favorito.videojuego.titulo }}</h3>
+                    <p class="autor">por {{ favorito.videojuego.autor }}</p>
+                    <p class="categoria">{{ favorito.videojuego.categoria.nombre }}</p>
+                    <p class="fecha">{{ favorito.videojuego.fecha_publicacion|date:"d/m/Y" }}</p>
+                </div>
+            </a>
+            {% empty %}
+            <p class="no-videojuegos">No tienes juegos favoritos aún.</p>
+            {% endfor %}
         </div>
     </main>
 </body>
