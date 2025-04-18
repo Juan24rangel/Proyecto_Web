@@ -17,6 +17,20 @@
             <p><strong>Categoría:</strong> {{ videojuego.categoria.nombre }}</p>
             <p><strong>Fecha de publicación:</strong> {{ videojuego.fecha_publicacion|date:"d/m/Y" }}</p>
             <p class="sinopsis"><strong>Sinopsis:</strong> {{ videojuego.sinopsis }}</p>
+            
+            {% if user.is_authenticated and not user.is_superuser %}
+                {% if es_favorito %}
+                    <form method="post" action="{% url 'eliminar_favorito' videojuego.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Eliminar de favoritos</button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'agregar_favorito' videojuego.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Agregar a favoritos</button>
+                    </form>
+                {% endif %}
+            {% endif %}
         </div>
         <hr>
         <div class="comentarios">
@@ -57,16 +71,3 @@
 </body>
 </html>
 
-def detalle_videojuego(request, videojuego_id):
-    videojuego = get_object_or_404(Videojuego, id=videojuego_id)
-    comentarios = videojuego.comentarios.order_by('-fecha')
-    if request.method == 'POST':
-        rating = request.POST.get('rating')
-        texto = request.POST.get('texto')
-        if rating and texto:
-            Comentario.objects.create(videojuego=videojuego, rating=rating, texto=texto)
-            return redirect('detalle_videojuego', videojuego_id=videojuego.id)
-    return render(request, 'modulo/detalle_videojuego.html', {
-        'videojuego': videojuego,
-        'comentarios': comentarios
-    })

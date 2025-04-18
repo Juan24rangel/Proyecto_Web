@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
@@ -30,10 +31,18 @@ class Videojuego(models.Model):
         verbose_name_plural = "Videojuegos"
 
 class Comentario(models.Model):
-    videojuego = models.ForeignKey(Videojuego, on_delete=models.CASCADE, related_name='comentarios')
+    videojuego = models.ForeignKey('Videojuego', on_delete=models.CASCADE, related_name='comentarios')
     texto = models.TextField()
-    rating = models.IntegerField(default=0)  # Nuevo campo para la puntuación
+    rating = models.IntegerField(default=0)  # Si usas estrellas
     fecha = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.videojuego.titulo} - {self.rating} estrellas"
+        return f"Comentario en {self.videojuego.titulo} - {self.texto[:30]}"
+
+class Favorito(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favoritos')
+    videojuego = models.ForeignKey('Videojuego', on_delete=models.CASCADE, related_name='favoritos')
+    fecha_agregado = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.videojuego.titulo}"
