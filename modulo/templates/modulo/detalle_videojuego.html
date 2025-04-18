@@ -9,7 +9,12 @@
 <body>
     <main>
         <div class="detalle-videojuego">
-            {% if videojuego.imagen %}
+            {% if videojuego.video_url %}
+                <iframe width="560" height="315" src="{{ videojuego.video_url|add:'?rel=0' }}" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+            {% elif videojuego.imagen %}
                 <img src="{{ videojuego.imagen.url }}" alt="{{ videojuego.titulo }}" class="imagen-videojuego">
             {% endif %}
             <h1>{{ videojuego.titulo }}</h1>

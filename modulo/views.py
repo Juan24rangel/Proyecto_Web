@@ -20,23 +20,16 @@ def index(request):
 
 def detalle_videojuego(request, videojuego_id):
     videojuego = get_object_or_404(Videojuego, id=videojuego_id)
-    comentarios = videojuego.comentarios.order_by('-fecha')  # Ordenar por fecha descendente
+    comentarios = videojuego.comentarios.order_by('-fecha')
     es_favorito = False
 
     if request.user.is_authenticated:
         es_favorito = Favorito.objects.filter(usuario=request.user, videojuego=videojuego).exists()
 
-    if request.method == 'POST':
-        texto = request.POST.get('texto')
-        rating = request.POST.get('rating')  # Si usas estrellas
-        if texto:
-            Comentario.objects.create(videojuego=videojuego, texto=texto, rating=rating)
-            return redirect('detalle_videojuego', videojuego_id=videojuego.id)
-
     return render(request, 'modulo/detalle_videojuego.html', {
         'videojuego': videojuego,
         'comentarios': comentarios,
-        'es_favorito': es_favorito,  # Pasar al template
+        'es_favorito': es_favorito,
     })
 
 @login_required

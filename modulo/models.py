@@ -22,6 +22,7 @@ class Videojuego(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='videojuegos/', null=True, blank=True)  # Nuevo campo
     sinopsis = models.TextField(null=True, blank=True)  # Nuevo campo
+    video_url = models.URLField(max_length=200, null=True, blank=True)  # Nuevo campo para el video
 
     def __str__(self):
         return f"{self.titulo} - {self.autor}"
