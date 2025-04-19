@@ -4,18 +4,25 @@ from .models import Videojuego, Categoria, Comentario, Favorito, Perfil
 from .forms import FotoPerfilForm
 
 def index(request):
+    query = request.GET.get('q')
     categoria_seleccionada = request.GET.get('categoria', '')
     categorias = Categoria.objects.all()
-    
-    if categoria_seleccionada:
+
+    if query:
+        videojuegos = Videojuego.objects.filter(titulo__icontains=query)
+        mensaje = None if videojuegos.exists() else "Este videojuego aún no está registrado."
+    elif categoria_seleccionada:
         videojuegos = Videojuego.objects.filter(categoria_id=categoria_seleccionada)
+        mensaje = None
     else:
         videojuegos = Videojuego.objects.all()
-    
+        mensaje = None
+
     return render(request, 'modulo/index.html', {
         'videojuegos': videojuegos,
         'categorias': categorias,
-        'categoria_seleccionada': categoria_seleccionada
+        'categoria_seleccionada': categoria_seleccionada,
+        'mensaje': mensaje,
     })
 
 def detalle_videojuego(request, videojuego_id):
@@ -56,20 +63,3 @@ def eliminar_favorito(request, videojuego_id):
     videojuego = get_object_or_404(Videojuego, id=videojuego_id)
     Favorito.objects.filter(usuario=request.user, videojuego=videojuego).delete()
     return redirect('detalle_videojuego', videojuego_id=videojuego.id)
-
-def index(request):
-    query = request.GET.get('q')  # Obtén el término de búsqueda desde el formulario
-    if query:
-        videojuegos = Videojuego.objects.filter(titulo__icontains=query)  # Búsqueda insensible a mayúsculas
-        if not videojuegos.exists():
-            mensaje = "Este videojuego aún no está registrado."
-        else:
-            mensaje = None
-    else:
-        videojuegos = Videojuego.objects.all()
-        mensaje = None
-
-    return render(request, 'modulo/index.html', {
-        'videojuegos': videojuegos,
-        'mensaje': mensaje,
-    })
