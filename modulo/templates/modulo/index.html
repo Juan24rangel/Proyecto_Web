@@ -74,12 +74,6 @@
             {% endfor %}
         </div>
         
-        <div class="buscador">
-            <form method="get" action="{% url 'index' %}">
-                <input type="text" name="q" placeholder="Buscar videojuegos..." value="{{ request.GET.q }}">
-                <button type="submit">Buscar</button>
-            </form>
-        </div>
 
         {% if mensaje %}
             <p class="mensaje">{{ mensaje }}</p>

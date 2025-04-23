@@ -18,11 +18,10 @@ class Videojuego(models.Model):
     titulo = models.CharField(max_length=100)
     autor = models.CharField(max_length=100)
     fecha_publicacion = models.DateField()
-    ISBN = models.CharField(max_length=13, unique=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to='videojuegos/', null=True, blank=True)  # Nuevo campo
-    sinopsis = models.TextField(null=True, blank=True)  # Nuevo campo
-    video_url = models.URLField(max_length=200, null=True, blank=True)  # Nuevo campo para el video
+    imagen = models.ImageField(upload_to='videojuegos/', null=True, blank=True)
+    sinopsis = models.TextField(null=True, blank=True)
+    video_url = models.URLField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return f"{self.titulo} - {self.autor}"

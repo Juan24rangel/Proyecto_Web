@@ -105,11 +105,10 @@ select {
 .categoria {
     color: #3498db;
     background: #eaf6fb;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    display: inline-block;
-    margin-bottom: 0.5rem;
+    display: block;         /* Hace que ocupe todo el ancho */
+    text-align: center;     /* Centra el texto */
+    margin: 0.3rem 0;
+    font-size: 1.5rem;
 }
 
 .fecha {
