@@ -25,6 +25,7 @@
             {% if form.errors %}
                 <p style="color: red;">Usuario o contraseña incorrectos.</p>
             {% endif %}
+            <p>¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
         </div>
         <form method="post" action="{% url 'logout' %}" style="display: inline;">
             {% csrf_token %}

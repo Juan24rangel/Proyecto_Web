@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 from .models import Videojuego, Categoria, Comentario, Favorito, Perfil
-from .forms import FotoPerfilForm
+from .forms import FotoPerfilForm, RegistroUsuarioForm
 
 def index(request):
     query = request.GET.get('q')
@@ -63,3 +64,16 @@ def eliminar_favorito(request, videojuego_id):
     videojuego = get_object_or_404(Videojuego, id=videojuego_id)
     Favorito.objects.filter(usuario=request.user, videojuego=videojuego).delete()
     return redirect('detalle_videojuego', videojuego_id=videojuego.id)
+
+def registro(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = RegistroUsuarioForm()
+    return render(request, 'modulo/registro.html', {'form': form})
