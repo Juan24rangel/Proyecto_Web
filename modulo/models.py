@@ -31,9 +31,10 @@ class Videojuego(models.Model):
         verbose_name_plural = "Videojuegos"
 
 class Comentario(models.Model):
-    videojuego = models.ForeignKey('Videojuego', on_delete=models.CASCADE, related_name='comentarios')
+    videojuego = models.ForeignKey(Videojuego, on_delete=models.CASCADE, related_name='comentarios')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     texto = models.TextField()
-    rating = models.IntegerField(default=0)  # Si usas estrellas
+    rating = models.IntegerField(default=0)
     fecha = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
